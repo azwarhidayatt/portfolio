@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Azwar Hidayat — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0A0A0A;
+      --white: #F5F5F5;
+      --gray: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: var(--black);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 3rem 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+
+    .hero-bg-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(30vw, 38vw, 44vw);
+      line-height: 0.85;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      right: -2vw;
+      bottom: -0.05em;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 13vw, 11rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.25s forwards;
+    }
+
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+
+    .hero-bio {
+      max-width: 340px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--gray);
+    }
+
+    .hero-scroll {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .hero-scroll-line {
+      width: 48px;
+      height: 1px;
+      background: var(--gray);
+      animation: lineGrow 1.5s ease-in-out infinite;
+    }
+
+    @keyframes lineGrow {
+      0%, 100% { transform: scaleX(1); opacity: 0.5; }
+      50% { transform: scaleX(0.4); opacity: 1; }
+    }
+
+    /* ── WORK ── */
+    .work {
+      padding: 5rem 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--white);
+    }
+
+    .section-count {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+    }
+
+    .card-list { list-style: none; }
+
+    .card-item {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card-item:last-child {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card-link {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.6rem 0;
+      text-decoration: none;
+      color: var(--white);
+      transition: background 0.2s;
+    }
+
+    .card-link:hover { background: rgba(255,255,255,0.03); }
+    .card-link:hover .card-title-text { transform: translateX(6px); }
+    .card-link:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+    .card-thumb-wrap {
+      width: 160px;
+      height: 90px;
+      overflow: hidden;
+      background: #1C1C1C;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%);
+      transition: filter 0.3s, transform 0.4s;
+    }
+
+    .card-link:hover .card-thumb {
+      filter: grayscale(0%);
+      transform: scale(1.06);
+    }
+
+    .thumb-placeholder {
+      font-size: 1.8rem;
+      color: rgba(255,255,255,0.15);
+    }
+
+    .card-body { min-width: 0; }
+
+    .card-platform {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+
+    .card-title-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      transition: transform 0.25s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-arrow {
+      font-size: 1.4rem;
+      color: var(--white);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.25s ease;
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 5rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .contact-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 0.9;
+      letter-spacing: 0.03em;
+    }
+
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 0.5rem;
+    }
+
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .social-btn:hover {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .social-btn svg { width: 15px; height: 15px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1.2rem 1.5rem; }
+      header { padding: 7rem 1.5rem 3rem; }
+      .hero-bottom { flex-direction: column; gap: 1.5rem; }
+      .work { padding: 3rem 1.5rem; }
+      .card-link { grid-template-columns: 100px 1fr auto; gap: 1rem; }
+      .card-thumb-wrap { width: 100px; height: 60px; }
+      .contact { padding: 3rem 1.5rem; }
+      .contact-inner { flex-direction: column; }
+      footer { padding: 1.5rem; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">AZWAR HIDAYAT</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header>
+  <div class="hero-bg-text" aria-hidden="true">AZ</div>
+  <p class="hero-tag">Graphic Designer &amp; Video Editor</p>
+  <h1>AZWAR<br>HIDAYAT</h1>
+  <div class="hero-bottom">
+    <p class="hero-bio">
+      A Graphic designer and video editor focused on creating clean, intentional visuals. —<br>
+      A perfectionist by nature, care deeply about the small details.<br>
+      Based in Mataram, NTB.
+    </p>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      Scroll
+    </div>
+  </div>
+</header>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="section-header">
+    <span class="section-title">Recent Work</span>
+    <span class="section-count">08 Projects</span>
+  </div>
+
+  <ul class="card-list">
+    <li class="card-item">
+      <a class="card-link" href="https://www.instagram.com/reels/DAaibCJNlGg/" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" src="https://drive.google.com/file/d/1EJh4GpT2cTOz3aAPhJKw9eBkIEzcpZwW/view?usp=drive_link" alt="KITCHEN PREPARATION">
+        </div>
+        <div class="card-body">
+          <p class="card-platform">ELFBELLY STEAKHOUSE</p>
+          <p class="card-title-text">KITCHEN PREPARATION</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+    <li class="card-item">
+      <a class="card-link" href="https://www.instagram.com/reels/DITLW4ZzKBk/" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <div class="thumb-placeholder">▶</div>
+        </div>
+        <div class="card-body">
+          <p class="card-platform">ELFBELLY STEAKHOUSE</p>
+          <p class="card-title-text">CHEF EDUCATION</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+    <li class="card-item">
+      <a class="card-link" href="https://www.instagram.com/reels/C-pP_nUzyQ9/" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <div class="<img class="card-thumb" src="URL_THUMBNAIL" alt="..."></div>
+        </div>
+        <div class="card-body">
+          <p class="card-platform">MIRACLE LOMBOK</p>
+          <p class="card-title-text">PRODUCT MIRABRITE</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+    <li class="card-item">
+      <a class="card-link" href="https://www.instagram.com/reels/C-HxprSznTx/" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <div class="thumb-placeholder">▶</div>
+        </div>
+        <div class="card-body">
+          <p class="card-platform">MIRACLE LOMBOK</p>
+          <p class="card-title-text">TRAILER LSF 2024</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+    <li class="card-item">
+      <a class="card-link" href="https://www.instagram.com/reels/DIsTVNhzp9u/" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <div class="thumb-placeholder">▶</div>
+        </div>
+        <div class="card-body">
+          <p class="card-platform">MIRACLE LOMBOK</p>
+          <p class="card-title-text">HARI KARTINI</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+    <li class="card-item">
+      <a class="card-link" href="https://www.instagram.com/reels/DJGMenCycB7/" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <div class="thumb-placeholder">▶</div>
+        </div>
+        <div class="card-body">
+          <p class="card-platform">KAFEBONO</p>
+          <p class="card-title-text">MENU RELEASE</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+     </li>
+    <li class="card-item">
+      <a class="card-link" href="https://drive.google.com/file/d/1PP0RQHxNkPSvvMCkb0W02VYyk-vAt-qr/view" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <div class="thumb-placeholder">▶</div>
+        </div>
+        <div class="card-body">
+          <p class="card-platform">AYAM SQUARE</p>
+          <p class="card-title-text">MENU MOTION</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+    <li class="card-item">
+      <a class="card-link" href="https://drive.google.com/file/d/1brpYcOEkqfo-jzlrt8TP755peUEKJvVI/view" target="_blank" rel="noopener">
+        <div class="card-thumb-wrap">
+          <div class="thumb-placeholder">▶</div>
+        </div>
+        <div class="card-body">
+          <p class="card-platform">PERSONAL PROJECT</p>
+          <p class="card-title-text">WATERFALL</p>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2>LET'S<br>START<br>SOMETHING</h2>
+    <div class="contact-right">
+      <p class="contact-label">Find me on</p>
+      <a class="social-btn" href="https://www.instagram.com/yy.aak?igsh=bmpxaHF4ejljYjV6" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        Instagram — @yy.aak
+      </a>
+      <a class="social-btn" href="https://wa.me/6282340782184" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Your Name</span>
+  <span>Mataram, Nusa Tenggara Barat</span>
+</footer>
+
+</body>
+</html>
